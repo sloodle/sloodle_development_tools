@@ -25,6 +25,10 @@ ECHO=/bin/echo
 ZIP=/usr/bin/zip
 CAT=/bin/cat
 
+# This is the pattern which, if we see, we will assume gives us the latest stable
+# Currently 1.x is the main production version, so anything tagged as that will be assumed to be the latest stable
+STABLEPATTERN="1"
+
 ${SVN} update ${SVNROOT} 
 
 cd ${SVNROOT}
@@ -47,28 +51,33 @@ do
 		${ZIP} ${WEBROOT}/sloodleobject_${tag}.zip -r sloodleobject
 		${ZIP} ${WEBROOT}/sloodle_all_${tag}.zip -r .
 
-		${CP} ${WEBROOT}/sloodle_menu_${tag}.zip ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.zip 
-		${CP} ${WEBROOT}/sloodle_${tag}.zip ${WEBROOT}/latest/sloodle_latest_stable.tmp.zip 
-		${CP} ${WEBROOT}/sloodleobject_${tag}.zip ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.zip 
-		${CP} ${WEBROOT}/sloodle_all_${tag}.zip ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.zip 
+                if [ `expr match "${tag}" "${STABLEPATTERN}"` -eq 1 ]
+                then
 
-		${CP} ${WEBROOT}/sloodle_menu_${tag}.tar.gz ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.tar.gz 
-		${CP} ${WEBROOT}/sloodle_${tag}.tar.gz ${WEBROOT}/latest/sloodle_latest_stable.tmp.tar.gz 
-		${CP} ${WEBROOT}/sloodleobject_${tag}.tar.gz ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.tar.gz 
-		${CP} ${WEBROOT}/sloodle_all_${tag}.tar.gz ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.tar.gz 
+			${CP} ${WEBROOT}/sloodle_menu_${tag}.zip ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.zip 
+			${CP} ${WEBROOT}/sloodle_${tag}.zip ${WEBROOT}/latest/sloodle_latest_stable.tmp.zip 
+			${CP} ${WEBROOT}/sloodleobject_${tag}.zip ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.zip 
+			${CP} ${WEBROOT}/sloodle_all_${tag}.zip ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.zip 
 
-		${MV} ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.zip ${WEBROOT}/latest/sloodle_menu_latest_stable.zip 
-		${MV} ${WEBROOT}/latest/sloodle_latest_stable.tmp.zip ${WEBROOT}/latest/sloodle_latest_stable.zip 
-		${MV} ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.zip ${WEBROOT}/latest/sloodleobject_latest_stable.zip 
-		${MV} ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.zip ${WEBROOT}/latest/sloodle_all_latest_stable.zip 
+			${CP} ${WEBROOT}/sloodle_menu_${tag}.tar.gz ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.tar.gz 
+			${CP} ${WEBROOT}/sloodle_${tag}.tar.gz ${WEBROOT}/latest/sloodle_latest_stable.tmp.tar.gz 
+			${CP} ${WEBROOT}/sloodleobject_${tag}.tar.gz ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.tar.gz 
+			${CP} ${WEBROOT}/sloodle_all_${tag}.tar.gz ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.tar.gz 
 
-		${MV} ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodle_menu_latest_stable.tar.gz 
-		${MV} ${WEBROOT}/latest/sloodle_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodle_latest_stable.tar.gz 
-		${MV} ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodleobject_latest_stable.tar.gz 
-		${MV} ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodle_all_latest_stable.tar.gz 
+			${MV} ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.zip ${WEBROOT}/latest/sloodle_menu_latest_stable.zip 
+			${MV} ${WEBROOT}/latest/sloodle_latest_stable.tmp.zip ${WEBROOT}/latest/sloodle_latest_stable.zip 
+			${MV} ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.zip ${WEBROOT}/latest/sloodleobject_latest_stable.zip 
+			${MV} ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.zip ${WEBROOT}/latest/sloodle_all_latest_stable.zip 
 
-		#${CP} ${WEBROOT}/sloodle.${REVISION}.tar.gz ${WEBROOT}/sloodle.tar.gz.temp
-		#${MV} ${WEBROOT}/sloodle.tar.gz.temp ${WEBROOT}/sloodle.tar.gz
-		#echo "${TAR} zcvf ${WEBROOT}/sloodle.${REVISION}tar.gz . -C ${CODEROOT}"
+			${MV} ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodle_menu_latest_stable.tar.gz 
+			${MV} ${WEBROOT}/latest/sloodle_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodle_latest_stable.tar.gz 
+			${MV} ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodleobject_latest_stable.tar.gz 
+			${MV} ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodle_all_latest_stable.tar.gz 
+
+			#${CP} ${WEBROOT}/sloodle.${REVISION}.tar.gz ${WEBROOT}/sloodle.tar.gz.temp
+			#${MV} ${WEBROOT}/sloodle.tar.gz.temp ${WEBROOT}/sloodle.tar.gz
+			#echo "${TAR} zcvf ${WEBROOT}/sloodle.${REVISION}tar.gz . -C ${CODEROOT}"
+
+		fi
 	fi
 done

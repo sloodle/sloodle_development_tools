@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh 
 # 
 # Script to generate tarballs / zip files from SVN repository at Google.
 # Expects the latest sloodle module directory to have been checked out once into SVNROOT.
