@@ -24,10 +24,6 @@ fi
 
 FILE=$1
 
-echo ""
-echo ""
-echo $FILE
-
 if test ! -f "$FILE"
 then
     echo "Script $FILE not found in oar file"
@@ -43,7 +39,7 @@ then
 fi
 
 SVN_SCRIPT="sloodle/${SVN_SCRIPT}"
-echo $SVN_SCRIPT
+# echo $SVN_SCRIPT
 
 
 
