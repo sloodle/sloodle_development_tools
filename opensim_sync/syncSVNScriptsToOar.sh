@@ -11,7 +11,7 @@
 # Example of intended use:
 # cd working/sloodle/trunk
 # svn up
-# find oar/ -name '*.lsl' -exec ../tools/opensim_sync/syncToSVN.sh {} \;
+# find oar/ -name '*.lsl' -exec ../tools/opensim_sync/syncSVNScriptsToOar.sh {} \;
 # svn diff oar | more
 # # Scan through the changes to make sure they make sense
 # svn commit oar
