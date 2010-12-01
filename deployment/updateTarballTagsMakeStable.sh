@@ -27,7 +27,7 @@ CAT=/bin/cat
 
 # This is the pattern which, if we see, we will assume gives us the latest stable
 # Currently 1.x is the main production version, so anything tagged as that will be assumed to be the latest stable
-STABLEPATTERN="1"
+STABLEPATTERN="1.1"
 
 ${SVN} update ${SVNROOT} 
 
@@ -51,7 +51,7 @@ do
 		${ZIP} ${WEBROOT}/sloodleobject_${tag}.zip -r sloodleobject
 		${ZIP} ${WEBROOT}/sloodle_all_${tag}.zip -r .
 
-                if [ `expr match "${tag}" "${STABLEPATTERN}"` -eq 1 ]
+                if [ `expr match "${tag}" "${STABLEPATTERN}"` -gt 0 ]
                 then
 
 			${CP} ${WEBROOT}/sloodle_menu_${tag}.zip ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.zip 
