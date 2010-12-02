@@ -23,7 +23,7 @@ MV=/bin/mv
 CP=/bin/cp
 SED=/bin/sed
 ECHO=/bin/echo
-ZIP=/usr/bin/zip
+ZIP="/usr/bin/zip -q"
 CAT=/bin/cat
 
 # This is the pattern which, if we see, we will assume gives us the latest stable
@@ -39,15 +39,15 @@ do
 	# echo ${tag}
 	if [ ! -f ${WEBROOT}/sloodle_all_${tag}.zip ]; # haven't done this one yet
 	then
-		${RSYNC} -arvz --delete ${SVNROOT}/${tag}/ ${CODEROOT}/${tag}/ --exclude=".svn"
+		${RSYNC} -arz --delete ${SVNROOT}/${tag}/ ${CODEROOT}/${tag}/ --exclude=".svn"
 
 		echo "Creating tarballs for ${tag}"
 
 		cd ${CODEROOT}/${tag}
-		${TAR} zcvf ${WEBROOT}/sloodle_menu_${tag}.tar.gz sloodle_menu
-		${TAR} zcvf ${WEBROOT}/sloodle_${tag}.tar.gz sloodle
-		${TAR} zcvf ${WEBROOT}/sloodleobject_${tag}.tar.gz sloodleobject
-		${TAR} zcvf ${WEBROOT}/sloodle_all_${tag}.tar.gz .
+		${TAR} zcf ${WEBROOT}/sloodle_menu_${tag}.tar.gz sloodle_menu
+		${TAR} zcf ${WEBROOT}/sloodle_${tag}.tar.gz sloodle
+		${TAR} zcf ${WEBROOT}/sloodleobject_${tag}.tar.gz sloodleobject
+		${TAR} zcf ${WEBROOT}/sloodle_all_${tag}.tar.gz .
 
 		${ZIP} ${WEBROOT}/sloodle_menu_${tag}.zip -r sloodle_menu
 		${ZIP} ${WEBROOT}/sloodle_${tag}.zip -r sloodle
