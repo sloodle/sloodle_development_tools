@@ -12,6 +12,7 @@ WEBROOT=${ROOT}/webroot/sloodle # This should be a web-accessible directory wher
 RESOURCEROOT=${ROOT}/resources # Temporary files and things all go under here - should be outside the webroot
 SVNROOT=${RESOURCEROOT}/svntags # You need to have checked out the tags directory to here
 CODEROOT=${RESOURCEROOT}/codetags # This will be for copies of the code without the .svn stuff.
+URLROOT=http://download.socialminds.jp/sloodle
 
 SVN=/usr/bin/svn
 AWK=/bin/awk
@@ -29,16 +30,18 @@ CAT=/bin/cat
 # Currently 1.x is the main production version, so anything tagged as that will be assumed to be the latest stable
 STABLEPATTERN="1.1"
 
-${SVN} update ${SVNROOT} 
+OUTPUT=`${SVN} update ${SVNROOT}`
 
 cd ${SVNROOT}
 
 for tag in `ls`
 do
-	echo ${tag}
+	# echo ${tag}
 	if [ ! -f ${WEBROOT}/sloodle_all_${tag}.zip ]; # haven't done this one yet
 	then
 		${RSYNC} -arvz --delete ${SVNROOT}/${tag}/ ${CODEROOT}/${tag}/ --exclude=".svn"
+
+		echo "Creating tarballs for ${tag}"
 
 		cd ${CODEROOT}/${tag}
 		${TAR} zcvf ${WEBROOT}/sloodle_menu_${tag}.tar.gz sloodle_menu
@@ -51,8 +54,20 @@ do
 		${ZIP} ${WEBROOT}/sloodleobject_${tag}.zip -r sloodleobject
 		${ZIP} ${WEBROOT}/sloodle_all_${tag}.zip -r .
 
+		echo "Created ${URLROOT}/sloodle_menu_${tag}.tar.gz"
+		echo "Created ${URLROOT}/sloodle_${tag}.tar.gz"
+		echo "Created ${URLROOT}/sloodleobject_${tag}.tar.gz"
+		echo "Created ${URLROOT}/sloodle_all_${tag}.tar.gz"
+
+		echo "Created ${URLROOT}/sloodle_menu_${tag}.zip"
+		echo "Created ${URLROOT}/sloodle_${tag}.zip"
+		echo "Created ${URLROOT}/sloodleobject_${tag}.zip"
+		echo "Created ${URLROOT}/sloodle_all_${tag}.zip"
+
                 if [ `expr match "${tag}" "${STABLEPATTERN}"` -gt 0 ]
                 then
+
+			echo "Tag ${tag} matches the latest stable pattern ${STABLEPATTHEN}, copying it to latest stable location"
 
 			${CP} ${WEBROOT}/sloodle_menu_${tag}.zip ${WEBROOT}/latest/sloodle_menu_latest_stable.tmp.zip 
 			${CP} ${WEBROOT}/sloodle_${tag}.zip ${WEBROOT}/latest/sloodle_latest_stable.tmp.zip 
@@ -73,6 +88,17 @@ do
 			${MV} ${WEBROOT}/latest/sloodle_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodle_latest_stable.tar.gz 
 			${MV} ${WEBROOT}/latest/sloodleobject_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodleobject_latest_stable.tar.gz 
 			${MV} ${WEBROOT}/latest/sloodle_all_latest_stable.tmp.tar.gz ${WEBROOT}/latest/sloodle_all_latest_stable.tar.gz 
+
+			echo "Created ${URLROOT}/latest/sloodle_menu_latest_stable.zip"
+			echo "Created ${URLROOT}/latest/sloodle_latest_stable.zip"
+			echo "Created ${URLROOT}/latest/sloodleobject_latest_stable.zip"
+			echo "Created ${URLROOT}/latest/sloodle_all_latest_stable.zip"
+
+			echo "Created ${URLROOT}/latest/sloodle_menu_latest_stable.tar.gz"
+			echo "Created ${URLROOT}/latest/sloodle_latest_stable.tar.gz"
+			echo "Created ${URLROOT}/latest/sloodleobject_latest_stable.tar.gz"
+			echo "Created ${URLROOT}/latest/sloodle_all_latest_stable.tar.gz"
+
 
 			#${CP} ${WEBROOT}/sloodle.${REVISION}.tar.gz ${WEBROOT}/sloodle.tar.gz.temp
 			#${MV} ${WEBROOT}/sloodle.tar.gz.temp ${WEBROOT}/sloodle.tar.gz

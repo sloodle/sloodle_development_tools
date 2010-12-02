@@ -1,17 +1,20 @@
 #!/bin/sh
-#
+# 
 # Script to generate tarballs / zip files from SVN repository at Google.
-# Expects the latest sloodle module directory to have been checked out once into                                              SVNROOT.
+# Expects the latest sloodle module directory to have been checked out once into SVNROOT.
 # Will update itself.
-# Creates one tarball / zip per revision, and copies the latest to sloodle.tar.g                                             z / sloodle.zip
+# Creates one tarball / zip per revision, and copies the latest to sloodle.tar.gz / sloodle.zip
 # (C) Edmund Edgar, 2007-09-09
 # Licensed under the GPL v2 - see sloodle/COPYING for details.
 
 ROOT=/var/www/download
 RESOURCEROOT=${ROOT}/resources
-WEBROOT=${ROOT}/webroot/sloodle
-SVNROOT=${RESOURCEROOT}/svn/sloodle
+WEBROOT=${ROOT}/webroot/sloodle/latest
+SVNROOT=${RESOURCEROOT}/svn
 CODEROOT=${RESOURCEROOT}/code
+SLOODLETOPDIR=sloodle_all
+IARROOT=$SVNROOT/$SLOODLETOPDIR/iar
+URLROOT=http://download.socialminds.jp/sloodle/latest
 
 SVN=/usr/bin/svn
 AWK=/bin/awk
@@ -25,25 +28,34 @@ ECHO=/bin/echo
 ZIP=/usr/bin/zip
 CAT=/bin/cat
 
-OLDREVISION=`${CAT} ${CODEROOT}/sloodle/REVISION`
-REVISION=`${SVN} update ${SVNROOT} | ${GREP} 'At revision' | ${AWK} '{print $3}'                                              | $SED s/\\\\.//`
+OLDREVISION=`${CAT} ${CODEROOT}/${SLOODLETOPDIR}/sloodle/REVISION`
+REVISION=`${SVN} update ${SVNROOT}/${SLOODLETOPDIR} | ${GREP} 'At revision' | ${AWK} '{print $3}' | $SED s/\\\\.//`
 REVISION=r${REVISION}
-echo $REVISION
 
 if [[ ${OLDREVISION} != ${REVISION} ]]; then
 
-        ${RSYNC} -arvz --delete ${SVNROOT}/ ${CODEROOT}/sloodle/ --exclude=".svn                                             "
-        $ECHO ${REVISION} > ${CODEROOT}/sloodle/REVISION
+	echo "Creating trunk tarball for revision $REVISION"
 
-        cd ${CODEROOT}
-        ${TAR} zcvf ${WEBROOT}/sloodle.${REVISION}.tar.gz sloodle
-        ${CP} ${WEBROOT}/sloodle.${REVISION}.tar.gz ${WEBROOT}/sloodle.tar.gz.te                                             mp
-        ${MV} ${WEBROOT}/sloodle.tar.gz.temp ${WEBROOT}/sloodle.tar.gz
-        #echo "${TAR} zcvf ${WEBROOT}/sloodle.${REVISION}tar.gz . -C ${CODEROOT}                                             "
+	${RSYNC} -arvz --delete ${SVNROOT}/ ${CODEROOT}/ --exclude=".svn" --exclude=".iar"
+	$ECHO ${REVISION} > ${CODEROOT}/${SLOODLETOPDIR}/sloodle/REVISION
 
-        ${ZIP} ${WEBROOT}/sloodle.${REVISION}.zip -r sloodle/
-        ${CP} ${WEBROOT}/sloodle.${REVISION}.zip ${WEBROOT}/sloodle.zip.temp
-        ${MV} ${WEBROOT}/sloodle.zip.temp ${WEBROOT}/sloodle.zip
+	cd ${CODEROOT}
+	${TAR} zcvf ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.tar.gz ${SLOODLETOPDIR}
+
+#	${CP} ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.tar.gz ${WEBROOT}/${SLOODLETOPDIR}.tar.gz.temp
+#	${MV} ${WEBROOT}/${SLOODLETOPDIR}.tar.gz.temp ${WEBROOT}/${SLOODLETOPDIR}.tar.gz
+	${MV} ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.tar.gz ${WEBROOT}/${SLOODLETOPDIR}.tar.gz
+	echo "Updated ${URLROOT}/${SLOODLETOPDIR}.tar.gz"
+
+	${ZIP} ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.zip -r ${SLOODLETOPDIR}/
+#	${CP} ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.zip ${WEBROOT}/${SLOODLETOPDIR}.zip.temp
+#	${MV} ${WEBROOT}/${SLOODLETOPDIR}.zip.temp ${WEBROOT}/${SLOODLETOPDIR}.zip
+	${MV} ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.zip ${WEBROOT}/${SLOODLETOPDIR}.zip
+	echo "Updated ${URLROOT}/${SLOODLETOPDIR}.zip"
+
+	cd $IARROOT
+	${TAR} zcvf ${WEBROOT}/development.${REVISION}.iar * --exclude=".svn"
+	${MV} ${WEBROOT}/development.${REVISION}.iar ${WEBROOT}/development.iar
+	echo "Updated ${URLROOT}/development.iar"
 
 fi
-
