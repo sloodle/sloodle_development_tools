@@ -25,7 +25,7 @@ MV=/bin/mv
 CP=/bin/cp
 SED=/bin/sed
 ECHO=/bin/echo
-ZIP=/usr/bin/zip
+ZIP=/usr/bin/zip -1
 CAT=/bin/cat
 
 OLDREVISION=`${CAT} ${CODEROOT}/${SLOODLETOPDIR}/sloodle/REVISION`
@@ -36,11 +36,11 @@ if [[ ${OLDREVISION} != ${REVISION} ]]; then
 
 	echo "Creating trunk tarball for revision $REVISION"
 
-	${RSYNC} -arvz --delete ${SVNROOT}/ ${CODEROOT}/ --exclude=".svn" --exclude=".iar"
+	${RSYNC} -arz --delete ${SVNROOT}/ ${CODEROOT}/ --exclude=".svn" --exclude=".iar"
 	$ECHO ${REVISION} > ${CODEROOT}/${SLOODLETOPDIR}/sloodle/REVISION
 
 	cd ${CODEROOT}
-	${TAR} zcvf ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.tar.gz ${SLOODLETOPDIR}
+	${TAR} zcf ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.tar.gz ${SLOODLETOPDIR}
 
 #	${CP} ${WEBROOT}/${SLOODLETOPDIR}.${REVISION}.tar.gz ${WEBROOT}/${SLOODLETOPDIR}.tar.gz.temp
 #	${MV} ${WEBROOT}/${SLOODLETOPDIR}.tar.gz.temp ${WEBROOT}/${SLOODLETOPDIR}.tar.gz
@@ -54,7 +54,7 @@ if [[ ${OLDREVISION} != ${REVISION} ]]; then
 	echo "Updated ${URLROOT}/${SLOODLETOPDIR}.zip"
 
 	cd $IARROOT
-	${TAR} zcvf ${WEBROOT}/development.${REVISION}.iar * --exclude=".svn"
+	${TAR} zcf ${WEBROOT}/development.${REVISION}.iar * --exclude=".svn"
 	${MV} ${WEBROOT}/development.${REVISION}.iar ${WEBROOT}/development.iar
 	echo "Updated ${URLROOT}/development.iar"
 
