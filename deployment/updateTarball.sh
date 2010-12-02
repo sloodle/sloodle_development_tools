@@ -25,7 +25,7 @@ MV=/bin/mv
 CP=/bin/cp
 SED=/bin/sed
 ECHO=/bin/echo
-ZIP=/usr/bin/zip -1
+ZIP=/usr/bin/zip -q
 CAT=/bin/cat
 
 OLDREVISION=`${CAT} ${CODEROOT}/${SLOODLETOPDIR}/sloodle/REVISION`
