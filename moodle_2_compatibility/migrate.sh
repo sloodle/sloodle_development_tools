@@ -16,6 +16,12 @@ echo "applying to ${APPLY_TO}"
 echo "applying from ${THIS_DIR}"
 
 cd ${APPLY_TO}
+
+# Replace legacy Moodle functions with sloodle_ wrappers
 find . -type f ! -regex ".*[/]\.svn[/]?.*" -exec sed -f ${THIS_DIR}/sloodle_wrappers.sed -i {} \;
 
+# Patch various misc changes, including the new wrapper functions
 patch -p1 < ${THIS_DIR}/sloodle.patch
+
+# Rename the language directories to drop the utf8 
+for x in `ls -d lang/*_utf8 | sed 's/_utf8$//' `; do mv ${x}_utf8 $x; done
