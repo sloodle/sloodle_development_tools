@@ -27,4 +27,7 @@ git push --tags
 
 echo "Tag creation done"
 
+git commit -a -m "Updated and tagged submodules"
+git push
+
 
