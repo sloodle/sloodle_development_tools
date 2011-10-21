@@ -1,33 +1,32 @@
 #!/bin/sh
-
 TAG=$1
+WORKINGDIR=$2
 
 if [ "$1" = "" ]; then
-   echo "Usage: sloodle_development_tools/deployment/tag_release.sh <tag>"
+   echo "Usage: ../sloodle_development_tools/deployment/tag_release.sh <tag> <working_dir>"
+   exit
+fi
+
+if [ "$2" = "" ]; then
+   echo "Usage: ../sloodle_development_tools/deployment/tag_release.sh <tag> <working_dir>"
    exit
 fi
 
 echo $TAG;
 
-if [ ! -d sloodle_development_tools ]; then
-   echo "The tag_release script must be run from inside the sloodle_all_submodules directory."
-   exit
-fi
+mkdir $WORKINGDIR
+cd $WORKINGDIR
 
-echo "Updating all sub-modules to origin/master"
-git submodule foreach git pull origin master
-
-echo "Tagging all sub-modules with tag $TAG"
-git submodule foreach git tag $TAG
-git tag $TAG
-
-echo "Pushing tags"
-git submodule foreach git push --tags
-git push --tags
+REPOS="moodle-mod_sloodle moodle-assignment_sloodleobject moodle-block_sloodle_menu moodle-block_sloodle_backpack"
+for REPO in $REPOS
+do
+	FULLREPO="git@github.com:sloodle/${REPO}.git"
+	git clone $FULLREPO 
+	cd $REPO
+	git pull
+#	git tag $TAG
+#	git push --tags
+	cd ..
+done
 
 echo "Tag creation done"
-
-git commit -a -m "Updated and tagged submodules"
-git push
-
-
