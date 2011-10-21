@@ -24,8 +24,8 @@ do
 	git clone $FULLREPO 
 	cd $REPO
 	git pull
-#	git tag $TAG
-#	git push --tags
+	git tag $TAG
+	git push --tags
 	cd ..
 done
 
