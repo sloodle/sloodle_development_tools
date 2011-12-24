@@ -44,7 +44,6 @@
 // List the name2key services you want to use here.
 $name2keyServices = array(
 	'http://vision-tech.org/name2key/search.php?name=' => 'LookupBasedName2KeyService',
-	'http://name2key.alpha-fox.com/' => 'LookupBasedName2KeyService',
 	'http://kdc.ethernia.net/sys/name2key.php' => 'GenericName2KeyService'
 );
 
