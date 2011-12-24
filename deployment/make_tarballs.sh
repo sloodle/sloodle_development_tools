@@ -89,3 +89,14 @@ ${ZIP} "${SAVEDIR}/sloodle_${TAG}.zip" -r ${SLOODLETOPDIR}/
 
 cd ..
 rm -rf "${WORKINGDIR}"
+
+mkdir "${WORKINGDIR}"
+
+wget -O "$TAG.tar.gz" "https://github.com/sloodle/sloodle_opensim_iar/tarball/$TAG"
+tar zxvf "$TAG.tar.gz"
+rm "$TAG.tar.gz"
+cd sloodle-sloodle_opensim_iar-*/iar
+cd iar
+tar zcvf "${SAVEDIR}/sloodle_rezzer_${TAG}.iar" archive.xml inventory/ assets/
+cd ../../..
+rm -rf "${WORKINGDIR}"

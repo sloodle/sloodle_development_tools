@@ -17,7 +17,7 @@ echo $TAG;
 mkdir $WORKINGDIR
 cd $WORKINGDIR
 
-REPOS="moodle-mod_sloodle moodle-assignment_sloodleobject moodle-block_sloodle_menu moodle-block_sloodle_backpack"
+REPOS="moodle-mod_sloodle moodle-assignment_sloodleobject moodle-block_sloodle_menu moodle-block_sloodle_backpack sloodle_opensim_iar"
 for REPO in $REPOS
 do
 	FULLREPO="git@github.com:sloodle/${REPO}.git"

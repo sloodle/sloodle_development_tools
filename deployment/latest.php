@@ -1,12 +1,14 @@
 <?php
-/*
-Script to download the latest of a particular version.
-Intended to be used from version 2.0 up, although it could be tweaked to work with older stuff.
-Edmund Edgar, 2011-12-16 as part of the sloodle project.
-Licensed under the same license as sloodle itself.
-*/
 $v = isset($_REQUEST['v']) ? intval($_REQUEST['v']) : 0;
+
 $ext_regex = ( isset($_REQUEST['format']) && ($_REQUEST['format'] == 'zip') ) ? '\.zip' : '\.tar\.gz';
+$ext_regex = ( isset($_REQUEST['format']) && ($_REQUEST['format'] == 'iar') ) ? '\.iar' : $ext_regex;
+
+$filename = 'sloodle';
+if ($ext_regex == '\.iar') {
+    $filename = 'sloodle_rezzer';
+}
+
 $fh = opendir('.');
 
 $highest_major = 0;
@@ -15,7 +17,7 @@ $highest_point = 0;
 $highest_filename = '';
 
 while (false !== ($entry = readdir($fh))) {
-	if (preg_match('/^sloodle_v(\d+)\.(\d+)\.(\d+).*?'.$ext_regex.'$/', $entry, $matches) ) {
+	if (preg_match('/^'.$filename.'_v(\d+)\.(\d+)\.(\d+).*?'.$ext_regex.'$/', $entry, $matches) ) {
 		$major = $matches[1];
 		$minor = $matches[2];
 		$point = $matches[3];
