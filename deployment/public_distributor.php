@@ -82,11 +82,11 @@ if (!$this->sloodle_course->load($this->course)) error(get_string('failedcoursel
 */
 
 // Fetch the SLOODLE instance itself
-if (!$sloodle = get_record('sloodle', 'id', $cm->instance)) error('Failed to find SLOODLE module instance');
+if (!$sloodle = sloodle_get_record('sloodle', 'id', $cm->instance)) error('Failed to find SLOODLE module instance');
 
-if (!$distributor = get_record('sloodle_distributor', 'sloodleid', $sloodle->id)) error('Failed to get SLOODLE Distributor data.');
+if (!$distributor = sloodle_get_record('sloodle_distributor', 'sloodleid', $sloodle->id)) error('Failed to get SLOODLE Distributor data.');
 
-$entries = get_records('sloodle_distributor_entry', 'distributorid', $distributor->id, 'name');
+$entries = sloodle_get_records('sloodle_distributor_entry', 'distributorid', $distributor->id, 'name');
 
 // If the query failed, then assume there were simply no items available
 if (!is_array($entries)) $entries = array();
