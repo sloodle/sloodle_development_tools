@@ -55,7 +55,9 @@ then
     exit 4
 fi
 
-if [ `diff --brief -x --ignore-eol-style $SVN_SCRIPT $FILE | wc -l` -gt 0 ]
+if [ `diff --brief -x --ignore-eol-style --ignore-all-space $SVN_SCRIPT $FILE | wc -l` -gt 0 ]
 then
-    cp $SVN_SCRIPT $FILE
+    #cp $SVN_SCRIPT $FILE
+    NEWFN=`echo $FILE | sed 's/.*\///'`
+    cp $FILE "$SVN_SCRIPT.$NEWFN"
 fi
