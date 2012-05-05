@@ -97,6 +97,6 @@ tar zxvf "$TAG.tar.gz"
 rm "$TAG.tar.gz"
 cd sloodle-sloodle_opensim_iar-*/iar
 cd iar
-tar zcvf "${SAVEDIR}/sloodle_rezzer_${TAG}.iar" archive.xml inventory/ assets/
+tar zcvf "${SAVEDIR}/sloodle_rezzer_${TAG}.iar" archive.xml inventory/* assets/*
 cd ../../..
 rm -rf "${WORKINGDIR}"
