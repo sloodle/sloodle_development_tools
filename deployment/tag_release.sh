@@ -1,6 +1,7 @@
 #!/bin/sh
 TAG=$1
 WORKINGDIR=$2
+AVATARCLASSROOMTOO=$3
 
 if [ "$1" = "" ]; then
    echo "Usage: ../sloodle_development_tools/deployment/tag_release.sh <tag> <working_dir>"
@@ -28,5 +29,14 @@ do
 	git push --tags
 	cd ..
 done
+
+if [ "$AVATARCLASSROOMTOO" != "" ]; then
+    git clone "git@github.com:git@github.com:edmundedgar/avatarclassroom_opensim_iar.git"
+	cd avatarclassroom_opensim_iar
+	git pull
+	git tag $TAG
+	git push --tags
+	cd ..
+fi
 
 echo "Tag creation done"
