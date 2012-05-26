@@ -100,3 +100,16 @@ cd iar
 tar zcvf "${SAVEDIR}/sloodle_rezzer_${TAG}.iar" archive.xml inventory/* assets/*
 cd ../../..
 rm -rf "${WORKINGDIR}"
+
+
+
+mkdir "${WORKINGDIR}"
+
+wget -O "$TAG.tar.gz" "https://github.com/edmundedgar/avatarclassroom_opensim_iar/tarball/$TAG"
+tar zxvf "$TAG.tar.gz"
+rm "$TAG.tar.gz"
+cd edmundedgar-avatarclassroom_opensim_iar-*/iar
+cd iar
+tar zcvf "${SAVEDIR}/avatarclassroom_rezzer_${TAG}.iar" archive.xml inventory/* assets/*
+cd ../../..
+rm -rf "${WORKINGDIR}"
