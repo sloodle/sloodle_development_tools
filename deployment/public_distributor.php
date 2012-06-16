@@ -7,7 +7,7 @@
 * ( However, functionality that accesses it to send the avatar of their choice suitable objects 
 * for their Sloodle install, once written, is intended to go into the regular Sloodle distribution. )
 * 
-* It should be installed under mod/sloodle, ie. in the same directory as sl_config.php
+* It should be installed under mod/sloodle, ie. in the same directory as init.php
 *
 * Parts of this script require manual configuration. (See below)
 *
@@ -60,7 +60,7 @@ $warningMailAddressesAndThresholds = array(
 //
 
 /** SLOODLE and Moodle configuration */
-require_once('sl_config.php');
+require_once('init.php');
 /** General SLOODLE library functionality */
 require_once(SLOODLE_LIBROOT.'/general.php');
 
