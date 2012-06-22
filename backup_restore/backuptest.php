@@ -12,7 +12,7 @@ $backup_types = array(
 );
 
 if (count($argv) < 3) {
-    print "Usage: ".$argv[0]." <user> <type> <course_or_activity_id>\n";
+    print "Usage: ".$argv[0]." <user> <type> <course_or_activity_id> [<file_to_show_afterwards>]\n";
     exit;
 }
 
@@ -40,3 +40,31 @@ $bc = new backup_controller($backup_type, $course_module_to_backup, backup::FORM
 //$bc = new backup_controller(backup::TYPE_1COURSE, $course_module_to_backup, backup::FORMAT_MOODLE, backup::INTERACTIVE_NO, backup::MODE_GENERAL, $user_doing_the_backup);
 
 $bc->execute_plan();
+
+
+$backupdir = '../resources/moodledata/temp/backup';
+
+$folder = null;
+$highestmtime = 0;
+foreach (glob($backupdir.'/*') as $f) {
+    if (!is_dir($f)) {
+        continue;
+    }
+    if ( !$folder || (filemtime($f) > $highestmtime) ) {
+        $folder = $f;
+        $highestmtime = filemtime($f);
+    }
+}
+
+//$folderbits = explode('/',$folder);
+//$folder = array_pop($folderbits);
+
+print "\n\n";
+print "Most recent backup folder, probably the one I created: \n";
+print "$folder\n";
+
+if (isset($argv[4])) {
+    if ($cmd = $argv[4]) {
+        echo `cat $folder/$argv[4]`;
+    }
+}
