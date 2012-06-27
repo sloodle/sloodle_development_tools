@@ -12,6 +12,8 @@ if [ ! -f "$AFTER" ]; then
 	fi
 	git mv $BEFORE $AFTER
 fi
+
+find . -type f -name '*.lslp' -print0 | xargs -0 perl -i -pe "s#$BEFORE#$AFTER#g" *.lsl
 popd
 
 pushd ../../avatarclassroom_opensim_iar/iar/assets
