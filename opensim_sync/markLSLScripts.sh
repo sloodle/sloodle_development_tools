@@ -7,4 +7,5 @@
 cd ../../moodle-mod_sloodle
 #find * -name '*.lsl' -exec sh -c "echo \"// Please leave the following line intact to show where the script lives in Subversion:\n// SLOODLE LSL Script Subversion Location: {} \" >> {}" \;
 find * -name '*.lsl' -exec sh -c "if ! grep -q \"SLOODLE LSL Script Subversion Location\" {}; then echo \"\n// Please leave the following line intact to show where the script lives in Subversion:\n// SLOODLE LSL Script Subversion Location: {} \" >> {}; fi" \;
+find * -name '*.lslp' -exec sh -c "if ! grep -q \"SLOODLE LSL Script Subversion Location\" {}; then echo \"\n// Please leave the following line intact to show where the script lives in Subversion:\n// SLOODLE LSL Script Subversion Location: {} \" >> {}; fi" \;
 
