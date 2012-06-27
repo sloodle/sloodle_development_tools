@@ -5,7 +5,7 @@
 # Script to copy over a single file in an opensim archive with the matching contents from Git.
 # For legacy reasons, this still says "Subversion".
 # Assumes that both the LSL script in the iar fila and its counterpart in SVN contain a line like the following:
-# // SLOODLE LSL Script Subversion Location: mod/awards-1.0/lsl/xytext_prims/xytext.lsl
+# // SLOODLE LSL Script Git Location: mod/awards-1.0/lsl/xytext_prims/xytext.lsl
 # It is intended that this script will be passed the results of a "find" command, allowing us to sync a whole .iar file in one go.
 # NB There may be some mistakes in the Subversion location lines in the iar file - these should turn up the first time we sync.
 #
