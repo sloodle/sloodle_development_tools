@@ -12,7 +12,7 @@
 # Example of intended use:
 # cd working/sloodle_opensim_iar
 # git pull
-# find iar/ -name '*.lsl' -exec ../sloodle_development_tools/opensim_sync/syncGITScriptsToOar.sh {} \;
+# find iar/ -name '*.lsl' -exec ../sloodle_development_tools/opensim_sync/syncIARScriptsToGIT.sh {} \;
 # git diff iar | more
 # # Scan through the changes to make sure they make sense
 # git add -a
