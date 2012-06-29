@@ -1,4 +1,18 @@
 #!/bin/bash 
+#
+# This script regenerates the asset UUIDs for all LSL scripts in an IAR file.
+# This is done so that when a script has been updated inside the IAR rather than in world...
+# ...then reimported into an SL grid that had it before, or using a viewer that already has it in the cache...
+# ...we can be sure that the new version will be used, not the old one.
+#
+# These UUIDs are generated based on the md5 hash of the contents of the script.
+# This means that given two identical scripts with different UUIDs,
+# ...it will have the side effect of combining them into a single script.
+#
+# It is intended to be used as follows on an untarred IAR, like the one in sloodle_opensim_iar:
+# cd sloodle_opensim_iar/iar
+# find . -name '*.lsl' -exec ../../sloodle_development_tools/opensim_sync/fixuuid.sh {} \;
+#
 
 OLDASSET=$1
 
