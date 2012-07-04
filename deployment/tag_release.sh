@@ -31,7 +31,7 @@ do
 done
 
 if [ "$AVATARCLASSROOMTOO" != "" ]; then
-    git clone "git@github.com:git@github.com:edmundedgar/avatarclassroom_opensim_iar.git"
+    git clone "git@github.com:edmundedgar/avatarclassroom_opensim_iar.git"
 	cd avatarclassroom_opensim_iar
 	git pull
 	git tag $TAG
