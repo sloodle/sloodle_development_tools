@@ -1,15 +1,16 @@
 #!/bin/sh
 TAG=$1
 WORKINGDIR=$2
-AVATARCLASSROOMTOO=$3
+BRANCH=$3
+AVATARCLASSROOMTOO=$4
 
 if [ "$1" = "" ]; then
-   echo "Usage: ../sloodle_development_tools/deployment/tag_release.sh <tag> <working_dir>"
+   echo "Usage: ../sloodle_development_tools/deployment/tag_release.sh <tag> <working_dir> [<branch>] [<includeavatarclassroom>]"
    exit
 fi
 
 if [ "$2" = "" ]; then
-   echo "Usage: ../sloodle_development_tools/deployment/tag_release.sh <tag> <working_dir>"
+   echo "Usage: ../sloodle_development_tools/deployment/tag_release.sh <tag> <working_dir> [<branch>] [<includeavatarclassroom>]"
    exit
 fi
 
@@ -24,10 +25,12 @@ do
 	FULLREPO="git@github.com:sloodle/${REPO}.git"
 	git clone $FULLREPO 
 	cd $REPO
+	git checkout $BRANCH
 	git pull
 	git tag $TAG
 	git push --tags
 	cd ..
+	rm -rf $REPO
 done
 
 if [ "$AVATARCLASSROOMTOO" != "" ]; then
@@ -39,4 +42,6 @@ if [ "$AVATARCLASSROOMTOO" != "" ]; then
 	cd ..
 fi
 
-echo "Tag creation done"
+echo "Tag creation done, cleaning up"
+cd ..
+rm -rf $WORKINGDIR
