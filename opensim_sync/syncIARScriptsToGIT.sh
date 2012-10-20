@@ -5,14 +5,14 @@
 # Script to copy over a single file in an opensim archive with the matching contents from Git.
 # For legacy reasons, this still says "Git".
 # Assumes that both the LSL script in the iar fila and its counterpart in GIT contain a line like the following:
-# // SLOODLE LSL Script Git Location: mod/awards-1.0/lsl/xytext_prims/xytext.lsl
+# // SLOODLE LSL Script Git Location: mod/awards-1.0/lsl/xytext_prims/xytext.lslp
 # It is intended that this script will be passed the results of a "find" command, allowing us to sync a whole .iar file in one go.
 # NB There may be some mistakes in the Git location lines in the iar file - these should turn up the first time we sync.
 #
 # Example of intended use:
 # cd working/sloodle_opensim_iar
 # git pull
-# find iar/ -name '*.lsl' -exec ../sloodle_development_tools/opensim_sync/syncIARScriptsToGIT.sh {} \;
+# find iar/ -name '*.lslp' -exec ../sloodle_development_tools/opensim_sync/syncIARScriptsToGIT.sh {} \;
 # git diff iar | more
 # # Scan through the changes to make sure they make sense
 # git add -a
@@ -24,7 +24,7 @@ SLOODLE_ROOT=../moodle-mod_sloodle
 
 if [ $# -ne 1 ]
 then
-    echo "Usage: $0 <filename.lsl>"
+    echo "Usage: $0 <filename.lslp>"
     exit 1
 fi
 

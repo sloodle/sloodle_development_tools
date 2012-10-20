@@ -24,7 +24,7 @@ SLOODLE_ROOT=../moodle-mod_sloodle
 
 if [ $# -ne 1 ]
 then
-    echo "Usage: $0 <filename.lsl>"
+    echo "Usage: $0 <filename.lslp>"
     exit 1
 fi
 
